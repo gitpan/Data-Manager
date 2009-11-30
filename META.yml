@@ -19,10 +19,10 @@ no_index:
     - inc
     - t
 requires:
-  Data::Verifier: 0
+  Data::Verifier: 0.23
   JSON::Any: 0
-  Message::Stack: 0
+  Message::Stack: 0.11
   MooseX::Storage: 0
 resources:
   license: http://dev.perl.org/licenses/
-version: 0.01
+version: 0.02
