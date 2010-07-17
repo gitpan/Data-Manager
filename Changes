@@ -1,5 +1,8 @@
 Revision history for Data-Manager
 
+0.06    Jul 16, 2010
+  - Use Message::Stack::Parser::DataVerifier for parsing Data::Verifier 
+
 0.06    December 7th, 2009
   - POD updates
 
