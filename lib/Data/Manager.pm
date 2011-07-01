@@ -7,7 +7,7 @@ with 'MooseX::Storage::Deferred';
 use Message::Stack;
 use Message::Stack::Parser::DataVerifier;
 
-our $VERSION = '0.07';
+our $VERSION = '0.08';
 
 has 'messages' => (
     is => 'ro',
@@ -146,7 +146,7 @@ redirects.
     my $bill_stack = $dm->messages_for_scope('billing_address');
     
     my $ship_results = $dm->get_results('shipping_address');
-    my $ship_stack = $dm->messages_for_scope('shipping_address);
+    my $ship_stack = $dm->messages_for_scope('shipping_address');
 
 =head1 SERIALIZATION
 
@@ -156,7 +156,7 @@ The Data::Manager object may be serialized thusly:
   # later
   my $dm = Data::Manager->thaw($ser, { format => 'JSON' });
 
-This is possible thanks to the magic of L<MooseX::Storage>.  All attribute
+This is possible thanks to the magic of L<MooseX::Storage>.  All attributes
 B<except> C<verifiers> are stored.  B<Serialization causes the verifiers
 attribute to be set to undefined, as those objects are not serializable>.
 
@@ -208,6 +208,8 @@ L<Data::Verifier::Results> class will be returned.
 Cory G Watson, C<< <gphat at cpan.org> >>
 
 =head1 ACKNOWLEDGEMENTS
+
+Justin Hunter
 
 Jay Shirley
 
