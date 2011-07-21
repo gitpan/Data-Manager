@@ -1,18 +1,23 @@
 package Data::Manager;
+BEGIN {
+  $Data::Manager::VERSION = '0.09';
+}
 use Moose;
 use MooseX::Storage;
 
 with 'MooseX::Storage::Deferred';
 
+# ABSTRACT: The Marriage of Message::Stack & Data::Verifier
+
 use Message::Stack;
 use Message::Stack::Parser::DataVerifier;
 
-our $VERSION = '0.08';
 
 has 'messages' => (
     is => 'ro',
     isa => 'Message::Stack',
-    lazy_build => 1,
+    lazy => 1,
+    default => sub { Message::Stack->new },
     handles => {
         'messages_for_scope' => 'for_scope',
     }
@@ -22,6 +27,7 @@ has '_parser' => (
     is => 'ro',
     isa => 'Message::Stack::DataVerifier',
 );
+
 
 has 'results' => (
     traits => [ 'Hash' ],
@@ -34,6 +40,7 @@ has 'results' => (
     }
 );
 
+
 has 'verifiers' => (
     traits => [ 'Hash', 'DoNotSerialize' ],
     is => 'ro',
@@ -45,21 +52,6 @@ has 'verifiers' => (
     }
 );
 
-sub _build_messages {
-    my ($self) = @_;
-
-    # We lazily build the messages to avoid parsing the results until the last
-    # possible moment.  This lets the user fiddle with the results if they
-    # want.
-
-    my $stack = Message::Stack->new;
-    foreach my $scope (keys %{ $self->results }) {
-        my $results = $self->get_results($scope);
-        Message::Stack::Parser::DataVerifier->parse($stack, $scope, $results);
-    }
-
-    return $stack;
-}
 
 sub success {
     my ($self) = @_;
@@ -71,6 +63,7 @@ sub success {
     return 1;
 }
 
+
 sub verify {
     my ($self, $scope, $data) = @_;
 
@@ -80,31 +73,26 @@ sub verify {
     my $results = $verifier->verify($data);
     $self->set_results($scope, $results);
 
+    Message::Stack::Parser::DataVerifier->parse($self->messages, $scope, $results);
+
     return $results;
 }
 
-1;
 
+__PACKAGE__->meta->make_immutable;
+no Moose;
+
+1;
 __END__
+=pod
 
 =head1 NAME
 
 Data::Manager - The Marriage of Message::Stack & Data::Verifier
 
-=head1 DESCRIPTION
+=head1 VERSION
 
-Data::Manager provides a convenient mechanism for managing multiple
-L<Data::Verifier> inputs with a single L<Message::Stack>, as well as
-convenient retrieval of the results of verification.
-
-This module is useful if you have complex forms and you'd prefer to create
-separate L<Data::Verifier> objects, but want to avoid creating a complex
-hashref of your own creation to manage things.
-
-It should also be noted that if married with L<MooseX::Storage>, this entire
-object and it's contents can be serialized.  This maybe be useful with
-L<Catalyst>'s C<flash> for storing the results of verification between
-redirects.
+version 0.09
 
 =head1 SYNOPSIS
 
@@ -148,6 +136,21 @@ redirects.
     my $ship_results = $dm->get_results('shipping_address');
     my $ship_stack = $dm->messages_for_scope('shipping_address');
 
+=head1 DESCRIPTION
+
+Data::Manager provides a convenient mechanism for managing multiple
+L<Data::Verifier> inputs with a single L<Message::Stack>, as well as
+convenient retrieval of the results of verification.
+
+This module is useful if you have complex forms and you'd prefer to create
+separate L<Data::Verifier> objects, but want to avoid creating a complex
+hashref of your own creation to manage things.
+
+It should also be noted that if married with L<MooseX::Storage>, this entire
+object and it's contents can be serialized.  This maybe be useful with
+L<Catalyst>'s C<flash> for storing the results of verification between
+redirects.
+
 =head1 SERIALIZATION
 
 The Data::Manager object may be serialized thusly:
@@ -179,14 +182,14 @@ HashRef of L<Data::Verifier> objects, keyed by scope.
 
 =head1 METHODS
 
-=head2 get_results ($scope)
-
-Gets the L<Data::Verifier::Results> object for the specified scope.
-
 =head2 messages_for_scope ($scope)
 
 Returns a L<Message::Stack> object containing messages for the specified
 scope.
+
+=head2 get_results ($scope)
+
+Gets the L<Data::Verifier::Results> object for the specified scope.
 
 =head2 set_results ($scope, $results)
 
@@ -203,10 +206,6 @@ Verify the data against the specified scope.  After verification the results
 and messages will be automatically created and stored.  The
 L<Data::Verifier::Results> class will be returned.
 
-=head1 AUTHOR
-
-Cory G Watson, C<< <gphat at cpan.org> >>
-
 =head1 ACKNOWLEDGEMENTS
 
 Justin Hunter
@@ -215,13 +214,16 @@ Jay Shirley
 
 Brian Cassidy
 
-=head1 COPYRIGHT & LICENSE
+=head1 AUTHOR
 
-Copyright 2009 Cory G Watson.
+Cory G Watson <gphat@cpan.org>
 
-This program is free software; you can redistribute it and/or modify it
-under the terms of either: the GNU General Public License as published
-by the Free Software Foundation; or the Artistic License.
+=head1 COPYRIGHT AND LICENSE
 
-See http://dev.perl.org/licenses/ for more information.
+This software is copyright (c) 2011 by Cory G Watson.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
+
+=cut
 
