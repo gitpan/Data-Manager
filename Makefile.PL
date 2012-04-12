@@ -9,31 +9,33 @@ use ExtUtils::MakeMaker 6.30;
 
 
 my %WriteMakefileArgs = (
-  'ABSTRACT' => 'The Marriage of Message::Stack & Data::Verifier',
-  'AUTHOR' => 'Cory G Watson <gphat@cpan.org>',
-  'BUILD_REQUIRES' => {
-    'Data::Verifier' => '0',
-    'Test::More' => '0'
+  "ABSTRACT" => "The Marriage of Message::Stack & Data::Verifier",
+  "AUTHOR" => "Cory G Watson <gphat\@cpan.org>",
+  "BUILD_REQUIRES" => {
+    "Data::Verifier" => 0,
+    "Test::More" => 0,
+    "strict" => 0
   },
-  'CONFIGURE_REQUIRES' => {
-    'ExtUtils::MakeMaker' => '6.30'
+  "CONFIGURE_REQUIRES" => {
+    "ExtUtils::MakeMaker" => "6.30"
   },
-  'DISTNAME' => 'Data-Manager',
-  'EXE_FILES' => [],
-  'LICENSE' => 'perl',
-  'NAME' => 'Data::Manager',
-  'PREREQ_PM' => {
-    'JSON::Any' => '0',
-    'JSON::XS' => '0',
-    'Message::Stack' => '0',
-    'Message::Stack::Parser::DataVerifier' => '0',
-    'Moose' => '0',
-    'MooseX::Storage' => '0',
-    'MooseX::Storage::Deferred' => '0'
+  "DISTNAME" => "Data-Manager",
+  "EXE_FILES" => [],
+  "LICENSE" => "perl",
+  "NAME" => "Data::Manager",
+  "PREREQ_PM" => {
+    "JSON::Any" => 0,
+    "JSON::XS" => 0,
+    "Message::Stack" => 0,
+    "Message::Stack::Parser" => "0.05",
+    "Message::Stack::Parser::DataVerifier" => 0,
+    "Moose" => 0,
+    "MooseX::Storage" => 0,
+    "MooseX::Storage::Deferred" => 0
   },
-  'VERSION' => '0.09',
-  'test' => {
-    'TESTS' => 't/*.t'
+  "VERSION" => "0.10",
+  "test" => {
+    "TESTS" => "t/*.t"
   }
 );
 

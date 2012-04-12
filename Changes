@@ -1,5 +1,8 @@
 Revision history for Data-Manager
 
+0.10 Apr 11 2012
+  - Bump Message::Stack::Parser dependency
+
 0.09 Jul 21 2011
   - Convert to Dist::Zilla
   - Add results of a verify() to the message stack immediately, not at the

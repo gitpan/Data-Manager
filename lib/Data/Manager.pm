@@ -1,6 +1,6 @@
 package Data::Manager;
-BEGIN {
-  $Data::Manager::VERSION = '0.09';
+{
+  $Data::Manager::VERSION = '0.10';
 }
 use Moose;
 use MooseX::Storage;
@@ -73,7 +73,7 @@ sub verify {
     my $results = $verifier->verify($data);
     $self->set_results($scope, $results);
 
-    Message::Stack::Parser::DataVerifier->parse($self->messages, $scope, $results);
+    Message::Stack::Parser::DataVerifier::parse($self->messages, $scope, $results);
 
     return $results;
 }
@@ -92,7 +92,7 @@ Data::Manager - The Marriage of Message::Stack & Data::Verifier
 
 =head1 VERSION
 
-version 0.09
+version 0.10
 
 =head1 SYNOPSIS
 
@@ -220,7 +220,7 @@ Cory G Watson <gphat@cpan.org>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2011 by Cory G Watson.
+This software is copyright (c) 2012 by Cory G Watson.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.

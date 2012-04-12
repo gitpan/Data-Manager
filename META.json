@@ -4,7 +4,7 @@
       "Cory G Watson <gphat@cpan.org>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Dist::Zilla version 4.200007, CPAN::Meta::Converter version 2.110440",
+   "generated_by" : "Dist::Zilla version 4.300010, CPAN::Meta::Converter version 2.120630",
    "license" : [
       "perl_5"
    ],
@@ -21,31 +21,36 @@
       },
       "runtime" : {
          "requires" : {
-            "JSON::Any" : 0,
-            "JSON::XS" : 0,
-            "Message::Stack" : 0,
-            "Message::Stack::Parser::DataVerifier" : 0,
-            "Moose" : 0,
-            "MooseX::Storage" : 0,
-            "MooseX::Storage::Deferred" : 0
+            "JSON::Any" : "0",
+            "JSON::XS" : "0",
+            "Message::Stack" : "0",
+            "Message::Stack::Parser" : "0.05",
+            "Message::Stack::Parser::DataVerifier" : "0",
+            "Moose" : "0",
+            "MooseX::Storage" : "0",
+            "MooseX::Storage::Deferred" : "0"
          }
       },
       "test" : {
          "requires" : {
-            "Data::Verifier" : 0,
-            "Test::More" : 0
+            "Data::Verifier" : "0",
+            "Test::More" : "0",
+            "strict" : "0"
          }
       }
    },
    "release_status" : "stable",
    "resources" : {
-      "homepage" : "http://github.com/gphat/data-manager",
+      "bugtracker" : {
+         "web" : "https://github.com/gphat/data-manager/issues"
+      },
+      "homepage" : "https://github.com/gphat/data-manager",
       "repository" : {
          "type" : "git",
-         "url" : "http://github.com/gphat/data-manager",
-         "web" : "http://github.com/gphat/data-manager"
+         "url" : "https://github.com/gphat/data-manager.git",
+         "web" : "https://github.com/gphat/data-manager"
       }
    },
-   "version" : "0.09"
+   "version" : "0.10"
 }
 
